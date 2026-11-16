@@ -1,0 +1,51 @@
+@'
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+venv/
+.venv/
+env/
+
+# Secrets
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Model binaries
+models/*.pkl
+models/*.joblib
+
+# Large datasets
+data/raw/
+data/processed/*.csv
+!data/processed/network_nodes.csv
+!data/processed/network_edges.csv
+datasets/
+
+# Large experimental exports
+reports/cross_day/fair_hybrid_comparison.csv
+reports/cross_day/wednesday_predictions.csv
+reports/cross_day/wednesday_autoencoder_predictions.csv
+reports/hybrid_detection_results.csv
+reports/autoencoder_predictions*.csv
+
+# Backup scripts
+app_full_backup.py
+hybrid_detection_backup.py
+'@ | Set-Content .gitignore

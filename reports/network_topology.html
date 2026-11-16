@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 800px;
+                 background-color: #0b1020;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"borderWidth": 2, "color": "#36cfc9", "font": {"color": "white"}, "id": "107.180.108.2", "label": " ", "shape": "dot", "size": 18.092412624972017, "title": "IP Address: 107.180.108.2\u003cbr\u003eRisk Score: 0.28/100\u003cbr\u003ePriority: LOW\u003cbr\u003eObserved Role: No Attack Traffic Observed\u003cbr\u003eAttack Flows: 0\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 1"}, {"borderWidth": 2, "color": "#36cfc9", "font": {"color": "white"}, "id": "115.238.245.8", "label": " ", "shape": "dot", "size": 18.092412624972017, "title": "IP Address: 115.238.245.8\u003cbr\u003eRisk Score: 0.28/100\u003cbr\u003ePriority: LOW\u003cbr\u003eObserved Role: No Attack Traffic Observed\u003cbr\u003eAttack Flows: 0\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 1"}, {"borderWidth": 2, "color": "#36cfc9", "font": {"color": "white"}, "id": "12.156.73.33", "label": " ", "shape": "dot", "size": 18.092412624972017, "title": "IP Address: 12.156.73.33\u003cbr\u003eRisk Score: 0.28/100\u003cbr\u003ePriority: LOW\u003cbr\u003eObserved Role: No Attack Traffic Observed\u003cbr\u003eAttack Flows: 0\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 1"}, {"borderWidth": 2, "color": "#36cfc9", "font": {"color": "white"}, "id": "122.226.181.165", "label": " ", "shape": "dot", "size": 18.092412624972017, "title": "IP Address: 122.226.181.165\u003cbr\u003eRisk Score: 0.28/100\u003cbr\u003ePriority: LOW\u003cbr\u003eObserved Role: No Attack Traffic Observed\u003cbr\u003eAttack Flows: 0\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 2"}, {"borderWidth": 2, "color": "#36cfc9", "font": {"color": "white"}, "id": "122.226.181.166", "label": " ", "shape": "dot", "size": 18.092412624972017, "title": "IP Address: 122.226.181.166\u003cbr\u003eRisk Score: 0.28/100\u003cbr\u003ePriority: LOW\u003cbr\u003eObserved Role: No Attack Traffic Observed\u003cbr\u003eAttack Flows: 0\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 1"}, {"borderWidth": 2, "color": "#36cfc9", "font": {"color": "white"}, "id": "131.202.242.193", "label": " ", "shape": "dot", "size": 19.0333861054739, "title": "IP Address: 131.202.242.193\u003cbr\u003eRisk Score: 3.10/100\u003cbr\u003ePriority: LOW\u003cbr\u003eObserved Role: No Attack Traffic Observed\u003cbr\u003eAttack Flows: 0\u003cbr\u003eIncoming Flows: 5\u003cbr\u003eOutgoing Flows: 4"}, {"borderWidth": 2, "color": "#36cfc9", "font": {"color": "white"}, "id": "172.31.69.1", "label": " ", "shape": "dot", "size": 18.623663379939813, "title": "IP Address: 172.31.69.1\u003cbr\u003eRisk Score: 1.87/100\u003cbr\u003ePriority: LOW\u003cbr\u003eObserved Role: No Attack Traffic Observed\u003cbr\u003eAttack Flows: 0\u003cbr\u003eIncoming Flows: 3\u003cbr\u003eOutgoing Flows: 0"}, {"borderWidth": 2, "color": "#a855f7", "font": {"color": "white"}, "id": "172.31.69.25", "label": "TARGET", "shape": "dot", "size": 45, "title": "IP Address: 172.31.69.25\u003cbr\u003eRisk Score: 55.00/100\u003cbr\u003ePriority: MEDIUM\u003cbr\u003eObserved Role: Attack Traffic Target\u003cbr\u003eAttack Flows: 0\u003cbr\u003eIncoming Flows: 19955\u003cbr\u003eOutgoing Flows: 8"}, {"borderWidth": 2, "color": "#ffad33", "font": {"color": "white"}, "id": "18.216.200.189", "label": " ", "shape": "dot", "size": 31.281730905475705, "title": "IP Address: 18.216.200.189\u003cbr\u003eRisk Score: 39.85/100\u003cbr\u003ePriority: MEDIUM\u003cbr\u003eObserved Role: Attack Traffic Source\u003cbr\u003eAttack Flows: 2025\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 2025"}, {"borderWidth": 2, "color": "#ffad33", "font": {"color": "white"}, "id": "18.216.24.42", "label": " ", "shape": "dot", "size": 30.337310584155688, "title": "IP Address: 18.216.24.42\u003cbr\u003eRisk Score: 37.01/100\u003cbr\u003ePriority: MEDIUM\u003cbr\u003eObserved Role: Attack Traffic Source\u003cbr\u003eAttack Flows: 1880\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 1880"}, {"borderWidth": 2, "color": "#ffad33", "font": {"color": "white"}, "id": "18.218.11.51", "label": " ", "shape": "dot", "size": 30.005135160794858, "title": "IP Address: 18.218.11.51\u003cbr\u003eRisk Score: 36.02/100\u003cbr\u003ePriority: MEDIUM\u003cbr\u003eObserved Role: Attack Traffic Source\u003cbr\u003eAttack Flows: 1829\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 1829"}, {"borderWidth": 2, "color": "#ffad33", "font": {"color": "white"}, "id": "18.218.115.60", "label": " ", "shape": "dot", "size": 30.19401922505886, "title": "IP Address: 18.218.115.60\u003cbr\u003eRisk Score: 36.58/100\u003cbr\u003ePriority: MEDIUM\u003cbr\u003eObserved Role: Attack Traffic Source\u003cbr\u003eAttack Flows: 1858\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 1858"}, {"borderWidth": 2, "color": "#ffad33", "font": {"color": "white"}, "id": "18.218.229.235", "label": " ", "shape": "dot", "size": 31.926542021411443, "title": "IP Address: 18.218.229.235\u003cbr\u003eRisk Score: 41.78/100\u003cbr\u003ePriority: MEDIUM\u003cbr\u003eObserved Role: Attack Traffic Source\u003cbr\u003eAttack Flows: 2124\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 2124"}, {"borderWidth": 2, "color": "#ffad33", "font": {"color": "white"}, "id": "18.218.55.126", "label": " ", "shape": "dot", "size": 32.38246907308317, "title": "IP Address: 18.218.55.126\u003cbr\u003eRisk Score: 43.15/100\u003cbr\u003ePriority: MEDIUM\u003cbr\u003eObserved Role: Attack Traffic Source\u003cbr\u003eAttack Flows: 2194\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 2194"}, {"borderWidth": 2, "color": "#36cfc9", "font": {"color": "white"}, "id": "18.219.32.43", "label": " ", "shape": "dot", "size": 29.503615403955948, "title": "IP Address: 18.219.32.43\u003cbr\u003eRisk Score: 34.51/100\u003cbr\u003ePriority: LOW\u003cbr\u003eObserved Role: Attack Traffic Source\u003cbr\u003eAttack Flows: 1752\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 1752"}, {"borderWidth": 2, "color": "#ffad33", "font": {"color": "white"}, "id": "18.219.5.43", "label": " ", "shape": "dot", "size": 30.44803572527597, "title": "IP Address: 18.219.5.43\u003cbr\u003eRisk Score: 37.34/100\u003cbr\u003ePriority: MEDIUM\u003cbr\u003eObserved Role: Attack Traffic Source\u003cbr\u003eAttack Flows: 1897\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 1897"}, {"borderWidth": 2, "color": "#ffad33", "font": {"color": "white"}, "id": "18.219.9.1", "label": " ", "shape": "dot", "size": 31.574826867264676, "title": "IP Address: 18.219.9.1\u003cbr\u003eRisk Score: 40.72/100\u003cbr\u003ePriority: MEDIUM\u003cbr\u003eObserved Role: Attack Traffic Source\u003cbr\u003eAttack Flows: 2070\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 2070"}, {"borderWidth": 2, "color": "#36cfc9", "font": {"color": "white"}, "id": "185.171.50.102", "label": " ", "shape": "dot", "size": 18.092412624972017, "title": "IP Address: 185.171.50.102\u003cbr\u003eRisk Score: 0.28/100\u003cbr\u003ePriority: LOW\u003cbr\u003eObserved Role: No Attack Traffic Observed\u003cbr\u003eAttack Flows: 0\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 1"}, {"borderWidth": 2, "color": "#36cfc9", "font": {"color": "white"}, "id": "190.214.77.75", "label": " ", "shape": "dot", "size": 18.092412624972017, "title": "IP Address: 190.214.77.75\u003cbr\u003eRisk Score: 0.28/100\u003cbr\u003ePriority: LOW\u003cbr\u003eObserved Role: No Attack Traffic Observed\u003cbr\u003eAttack Flows: 0\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 1"}, {"borderWidth": 2, "color": "#36cfc9", "font": {"color": "white"}, "id": "200.241.132.151", "label": " ", "shape": "dot", "size": 18.092412624972017, "title": "IP Address: 200.241.132.151\u003cbr\u003eRisk Score: 0.28/100\u003cbr\u003ePriority: LOW\u003cbr\u003eObserved Role: No Attack Traffic Observed\u003cbr\u003eAttack Flows: 0\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 1"}, {"borderWidth": 2, "color": "#36cfc9", "font": {"color": "white"}, "id": "221.194.47.233", "label": " ", "shape": "dot", "size": 18.092412624972017, "title": "IP Address: 221.194.47.233\u003cbr\u003eRisk Score: 0.28/100\u003cbr\u003ePriority: LOW\u003cbr\u003eObserved Role: No Attack Traffic Observed\u003cbr\u003eAttack Flows: 0\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 1"}, {"borderWidth": 2, "color": "#36cfc9", "font": {"color": "white"}, "id": "221.194.47.239", "label": " ", "shape": "dot", "size": 18.092412624972017, "title": "IP Address: 221.194.47.239\u003cbr\u003eRisk Score: 0.28/100\u003cbr\u003ePriority: LOW\u003cbr\u003eObserved Role: No Attack Traffic Observed\u003cbr\u003eAttack Flows: 0\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 1"}, {"borderWidth": 2, "color": "#36cfc9", "font": {"color": "white"}, "id": "37.97.217.235", "label": " ", "shape": "dot", "size": 18.092412624972017, "title": "IP Address: 37.97.217.235\u003cbr\u003eRisk Score: 0.28/100\u003cbr\u003ePriority: LOW\u003cbr\u003eObserved Role: No Attack Traffic Observed\u003cbr\u003eAttack Flows: 0\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 1"}, {"borderWidth": 2, "color": "#ffad33", "font": {"color": "white"}, "id": "52.14.136.135", "label": " ", "shape": "dot", "size": 33.09241262497201, "title": "IP Address: 52.14.136.135\u003cbr\u003eRisk Score: 45.28/100\u003cbr\u003ePriority: MEDIUM\u003cbr\u003eObserved Role: Attack Traffic Source\u003cbr\u003eAttack Flows: 2303\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 2303"}, {"borderWidth": 2, "color": "#36cfc9", "font": {"color": "white"}, "id": "52.224.180.249", "label": " ", "shape": "dot", "size": 18.092412624972017, "title": "IP Address: 52.224.180.249\u003cbr\u003eRisk Score: 0.28/100\u003cbr\u003ePriority: LOW\u003cbr\u003eObserved Role: No Attack Traffic Observed\u003cbr\u003eAttack Flows: 0\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 2"}, {"borderWidth": 2, "color": "#36cfc9", "font": {"color": "white"}, "id": "60.191.38.77", "label": " ", "shape": "dot", "size": 18.092412624972017, "title": "IP Address: 60.191.38.77\u003cbr\u003eRisk Score: 0.28/100\u003cbr\u003ePriority: LOW\u003cbr\u003eObserved Role: No Attack Traffic Observed\u003cbr\u003eAttack Flows: 0\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 1"}, {"borderWidth": 2, "color": "#36cfc9", "font": {"color": "white"}, "id": "66.198.240.13", "label": " ", "shape": "dot", "size": 18.092412624972017, "title": "IP Address: 66.198.240.13\u003cbr\u003eRisk Score: 0.28/100\u003cbr\u003ePriority: LOW\u003cbr\u003eObserved Role: No Attack Traffic Observed\u003cbr\u003eAttack Flows: 0\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 1"}, {"borderWidth": 2, "color": "#36cfc9", "font": {"color": "white"}, "id": "8.0.6.4", "label": " ", "shape": "dot", "size": 18.123741884371398, "title": "IP Address: 8.0.6.4\u003cbr\u003eRisk Score: 0.37/100\u003cbr\u003ePriority: LOW\u003cbr\u003eObserved Role: No Attack Traffic Observed\u003cbr\u003eAttack Flows: 0\u003cbr\u003eIncoming Flows: 37\u003cbr\u003eOutgoing Flows: 0"}, {"borderWidth": 2, "color": "#36cfc9", "font": {"color": "white"}, "id": "8.6.0.1", "label": " ", "shape": "dot", "size": 18.092412624972017, "title": "IP Address: 8.6.0.1\u003cbr\u003eRisk Score: 0.28/100\u003cbr\u003ePriority: LOW\u003cbr\u003eObserved Role: No Attack Traffic Observed\u003cbr\u003eAttack Flows: 0\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 37"}, {"borderWidth": 2, "color": "#36cfc9", "font": {"color": "white"}, "id": "84.73.10.63", "label": " ", "shape": "dot", "size": 18.092412624972017, "title": "IP Address: 84.73.10.63\u003cbr\u003eRisk Score: 0.28/100\u003cbr\u003ePriority: LOW\u003cbr\u003eObserved Role: No Attack Traffic Observed\u003cbr\u003eAttack Flows: 0\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 1"}, {"borderWidth": 2, "color": "#36cfc9", "font": {"color": "white"}, "id": "91.185.191.213", "label": " ", "shape": "dot", "size": 18.092412624972017, "title": "IP Address: 91.185.191.213\u003cbr\u003eRisk Score: 0.28/100\u003cbr\u003ePriority: LOW\u003cbr\u003eObserved Role: No Attack Traffic Observed\u003cbr\u003eAttack Flows: 0\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 1"}, {"borderWidth": 2, "color": "#36cfc9", "font": {"color": "white"}, "id": "94.231.103.172", "label": " ", "shape": "dot", "size": 18.092412624972017, "title": "IP Address: 94.231.103.172\u003cbr\u003eRisk Score: 0.28/100\u003cbr\u003ePriority: LOW\u003cbr\u003eObserved Role: No Attack Traffic Observed\u003cbr\u003eAttack Flows: 0\u003cbr\u003eIncoming Flows: 0\u003cbr\u003eOutgoing Flows: 1"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "color": "#36cfc9", "from": "107.180.108.2", "title": "Source: 107.180.108.2\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 1\u003cbr\u003eAttack Flows: 0\u003cbr\u003eAttack Ratio: 0.00%", "to": "172.31.69.25", "width": 1.001}, {"arrows": "to", "color": "#36cfc9", "from": "115.238.245.8", "title": "Source: 115.238.245.8\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 1\u003cbr\u003eAttack Flows: 0\u003cbr\u003eAttack Ratio: 0.00%", "to": "172.31.69.25", "width": 1.001}, {"arrows": "to", "color": "#36cfc9", "from": "12.156.73.33", "title": "Source: 12.156.73.33\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 1\u003cbr\u003eAttack Flows: 0\u003cbr\u003eAttack Ratio: 0.00%", "to": "172.31.69.25", "width": 1.001}, {"arrows": "to", "color": "#36cfc9", "from": "122.226.181.165", "title": "Source: 122.226.181.165\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 2\u003cbr\u003eAttack Flows: 0\u003cbr\u003eAttack Ratio: 0.00%", "to": "172.31.69.25", "width": 1.002}, {"arrows": "to", "color": "#36cfc9", "from": "122.226.181.166", "title": "Source: 122.226.181.166\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 1\u003cbr\u003eAttack Flows: 0\u003cbr\u003eAttack Ratio: 0.00%", "to": "172.31.69.25", "width": 1.001}, {"arrows": "to", "color": "#36cfc9", "from": "131.202.242.193", "title": "Source: 131.202.242.193\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 4\u003cbr\u003eAttack Flows: 0\u003cbr\u003eAttack Ratio: 0.00%", "to": "172.31.69.25", "width": 1.004}, {"arrows": "to", "color": "#36cfc9", "from": "172.31.69.25", "title": "Source: 172.31.69.25\u003cbr\u003eDestination: 131.202.242.193\u003cbr\u003eTotal Flows: 5\u003cbr\u003eAttack Flows: 0\u003cbr\u003eAttack Ratio: 0.00%", "to": "131.202.242.193", "width": 1.005}, {"arrows": "to", "color": "#36cfc9", "from": "172.31.69.25", "title": "Source: 172.31.69.25\u003cbr\u003eDestination: 172.31.69.1\u003cbr\u003eTotal Flows: 3\u003cbr\u003eAttack Flows: 0\u003cbr\u003eAttack Ratio: 0.00%", "to": "172.31.69.1", "width": 1.003}, {"arrows": "to", "color": "#ff4d6d", "from": "18.216.200.189", "title": "Source: 18.216.200.189\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 2025\u003cbr\u003eAttack Flows: 2025\u003cbr\u003eAttack Ratio: 100.00%", "to": "172.31.69.25", "width": 3.025}, {"arrows": "to", "color": "#ff4d6d", "from": "18.216.24.42", "title": "Source: 18.216.24.42\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 1880\u003cbr\u003eAttack Flows: 1880\u003cbr\u003eAttack Ratio: 100.00%", "to": "172.31.69.25", "width": 2.88}, {"arrows": "to", "color": "#ff4d6d", "from": "18.218.11.51", "title": "Source: 18.218.11.51\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 1829\u003cbr\u003eAttack Flows: 1829\u003cbr\u003eAttack Ratio: 100.00%", "to": "172.31.69.25", "width": 2.8289999999999997}, {"arrows": "to", "color": "#ff4d6d", "from": "18.218.115.60", "title": "Source: 18.218.115.60\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 1858\u003cbr\u003eAttack Flows: 1858\u003cbr\u003eAttack Ratio: 100.00%", "to": "172.31.69.25", "width": 2.858}, {"arrows": "to", "color": "#ff4d6d", "from": "18.218.229.235", "title": "Source: 18.218.229.235\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 2124\u003cbr\u003eAttack Flows: 2124\u003cbr\u003eAttack Ratio: 100.00%", "to": "172.31.69.25", "width": 3.124}, {"arrows": "to", "color": "#ff4d6d", "from": "18.218.55.126", "title": "Source: 18.218.55.126\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 2194\u003cbr\u003eAttack Flows: 2194\u003cbr\u003eAttack Ratio: 100.00%", "to": "172.31.69.25", "width": 3.194}, {"arrows": "to", "color": "#ff4d6d", "from": "18.219.32.43", "title": "Source: 18.219.32.43\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 1752\u003cbr\u003eAttack Flows: 1752\u003cbr\u003eAttack Ratio: 100.00%", "to": "172.31.69.25", "width": 2.752}, {"arrows": "to", "color": "#ff4d6d", "from": "18.219.5.43", "title": "Source: 18.219.5.43\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 1897\u003cbr\u003eAttack Flows: 1897\u003cbr\u003eAttack Ratio: 100.00%", "to": "172.31.69.25", "width": 2.8970000000000002}, {"arrows": "to", "color": "#ff4d6d", "from": "18.219.9.1", "title": "Source: 18.219.9.1\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 2070\u003cbr\u003eAttack Flows: 2070\u003cbr\u003eAttack Ratio: 100.00%", "to": "172.31.69.25", "width": 3.07}, {"arrows": "to", "color": "#36cfc9", "from": "185.171.50.102", "title": "Source: 185.171.50.102\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 1\u003cbr\u003eAttack Flows: 0\u003cbr\u003eAttack Ratio: 0.00%", "to": "172.31.69.25", "width": 1.001}, {"arrows": "to", "color": "#36cfc9", "from": "190.214.77.75", "title": "Source: 190.214.77.75\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 1\u003cbr\u003eAttack Flows: 0\u003cbr\u003eAttack Ratio: 0.00%", "to": "172.31.69.25", "width": 1.001}, {"arrows": "to", "color": "#36cfc9", "from": "200.241.132.151", "title": "Source: 200.241.132.151\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 1\u003cbr\u003eAttack Flows: 0\u003cbr\u003eAttack Ratio: 0.00%", "to": "172.31.69.25", "width": 1.001}, {"arrows": "to", "color": "#36cfc9", "from": "221.194.47.233", "title": "Source: 221.194.47.233\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 1\u003cbr\u003eAttack Flows: 0\u003cbr\u003eAttack Ratio: 0.00%", "to": "172.31.69.25", "width": 1.001}, {"arrows": "to", "color": "#36cfc9", "from": "221.194.47.239", "title": "Source: 221.194.47.239\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 1\u003cbr\u003eAttack Flows: 0\u003cbr\u003eAttack Ratio: 0.00%", "to": "172.31.69.25", "width": 1.001}, {"arrows": "to", "color": "#36cfc9", "from": "37.97.217.235", "title": "Source: 37.97.217.235\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 1\u003cbr\u003eAttack Flows: 0\u003cbr\u003eAttack Ratio: 0.00%", "to": "172.31.69.25", "width": 1.001}, {"arrows": "to", "color": "#ff4d6d", "from": "52.14.136.135", "title": "Source: 52.14.136.135\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 2303\u003cbr\u003eAttack Flows: 2303\u003cbr\u003eAttack Ratio: 100.00%", "to": "172.31.69.25", "width": 3.303}, {"arrows": "to", "color": "#36cfc9", "from": "52.224.180.249", "title": "Source: 52.224.180.249\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 2\u003cbr\u003eAttack Flows: 0\u003cbr\u003eAttack Ratio: 0.00%", "to": "172.31.69.25", "width": 1.002}, {"arrows": "to", "color": "#36cfc9", "from": "60.191.38.77", "title": "Source: 60.191.38.77\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 1\u003cbr\u003eAttack Flows: 0\u003cbr\u003eAttack Ratio: 0.00%", "to": "172.31.69.25", "width": 1.001}, {"arrows": "to", "color": "#36cfc9", "from": "66.198.240.13", "title": "Source: 66.198.240.13\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 1\u003cbr\u003eAttack Flows: 0\u003cbr\u003eAttack Ratio: 0.00%", "to": "172.31.69.25", "width": 1.001}, {"arrows": "to", "color": "#36cfc9", "from": "8.6.0.1", "title": "Source: 8.6.0.1\u003cbr\u003eDestination: 8.0.6.4\u003cbr\u003eTotal Flows: 37\u003cbr\u003eAttack Flows: 0\u003cbr\u003eAttack Ratio: 0.00%", "to": "8.0.6.4", "width": 1.037}, {"arrows": "to", "color": "#36cfc9", "from": "84.73.10.63", "title": "Source: 84.73.10.63\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 1\u003cbr\u003eAttack Flows: 0\u003cbr\u003eAttack Ratio: 0.00%", "to": "172.31.69.25", "width": 1.001}, {"arrows": "to", "color": "#36cfc9", "from": "91.185.191.213", "title": "Source: 91.185.191.213\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 1\u003cbr\u003eAttack Flows: 0\u003cbr\u003eAttack Ratio: 0.00%", "to": "172.31.69.25", "width": 1.001}, {"arrows": "to", "color": "#36cfc9", "from": "94.231.103.172", "title": "Source: 94.231.103.172\u003cbr\u003eDestination: 172.31.69.25\u003cbr\u003eTotal Flows: 1\u003cbr\u003eAttack Flows: 0\u003cbr\u003eAttack Ratio: 0.00%", "to": "172.31.69.25", "width": 1.001}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"interaction": {"hover": true, "navigationButtons": true, "keyboard": true}, "physics": {"enabled": true, "stabilization": {"iterations": 200}}, "edges": {"smooth": {"type": "dynamic"}}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

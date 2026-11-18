@@ -1,23 +1,22 @@
 ﻿# SentinelMind AI
-### AI-Assisted Network Threat Detection and Security Operations Dashboard
 
-SentinelMind AI is a cybersecurity research project that combines machine learning, anomaly detection, and network graph analysis to support network threat investigation.
+**Network Intelligence and Cybersecurity Research Platform**
 
-It analyzes network traffic datasets, classifies known attack patterns, identifies unusual traffic for analyst review, and presents the results through an interactive Streamlit dashboard.
-
-> **Project type:** Offline cybersecurity research prototype. It is not a live network monitoring or production security system.
+SentinelMind AI is a Streamlit-based research prototype for analysing prepared network-traffic datasets, identifying suspicious patterns, reviewing investigation evidence, and managing security incidents.
 
 ## Features
 
-The dashboard contains five sections:
+1. **Threat Detection** – Review prepared traffic records and model predictions.
+2. **Network Intelligence** – Explore network nodes, connections, and topology.
+3. **Device Investigation** – Review device-level risk information.
+4. **Root Cause Analysis** – Examine supporting evidence and possible explanations.
+5. **Incident Management** – Save, review, and update investigation records.
+6. **Mitigation Verification** – Compare before-and-after network traffic captures.
+7. **IP Attack Path** – Investigate source and destination IP relationships.
+8. **System Diagnostics** – Run application, dataset, and database checks.
+9. **Methodology** – Review the analytical approach and project limitations.
 
-1. **Overview** – Threat summary, traffic statistics, and detection results.
-2. **Threat Detection** – Supervised attack classification and anomaly review.
-3. **Network Intelligence** – Network topology and communication analysis.
-4. **Device Investigation** – Device-level traffic information, centrality metrics, and heuristic risk prioritization.
-5. **Methodology** – Dataset, model, evaluation, and project limitations.
-
-## Technology Stack
+## Technology
 
 - Python
 - Streamlit
@@ -25,147 +24,99 @@ The dashboard contains five sections:
 - Scikit-learn
 - NetworkX
 - PyVis
+- SQLite
 - Matplotlib
-- Joblib
 
-## Detection Approach
-
-### 1. Random Forest Classification
-
-A Random Forest classifier is used to distinguish benign traffic from known attack patterns represented in the training data.
-
-### 2. Autoencoder-Based Anomaly Detection
-
-An autoencoder is trained using benign network traffic. Traffic with unusual reconstruction behaviour is flagged for further analyst review.
-
-An anomaly is not automatically considered a confirmed attack.
-
-### 3. Hybrid Threat Triage
-
-The project combines classification and anomaly results into three dashboard categories:
-
-- `NORMAL` – No attack classification or anomaly flag.
-- `CLASSIFIED_ATTACK` – Classified as an attack by the supervised model.
-- `ANOMALY_REVIEW` – Unusual traffic requiring further investigation.
-
-### 4. Network Intelligence
-
-NetworkX is used to analyze a separate network topology sample, including:
-
-- PageRank
-- Betweenness centrality
-- Network connectivity
-- Communication relationships
-
-### 5. Device Investigation
-
-A heuristic risk score helps prioritize devices for investigation. It is an analytical score, not a calibrated probability that a device is compromised.
-
-## Datasets
-
-The project uses:
-
-- **CIC-IDS2017** – Network traffic data for supervised classification and anomaly detection.
-- **CSE-CIC-IDS-2018** – A separate sample used for network topology analysis.
-
-The network topology sample is separate from the CIC-IDS2017 model evaluation.
-
-Full datasets are not included in this repository because of their size and should be obtained from their original research sources.
-
-## Evaluation Results
-
-### Dashboard classification evaluation
-
-The Random Forest results below are from a held-out test split of selected Tuesday and Wednesday CIC-IDS2017 records.
-
-| Metric | Random Forest |
-|---|---:|
-| Precision | 99.83% |
-| Recall | 99.85% |
-| F1-score | 99.84% |
-
-The autoencoder evaluation on the dashboard report produced:
-
-| Metric | Autoencoder |
-|---|---:|
-| Precision | 90.05% |
-| Recall | 76.55% |
-| F1-score | 82.75% |
-
-These results describe the evaluated dataset and split. They should not be interpreted as guaranteed performance on other networks.
-
-### Separate cross-day experiment
-
-A separate experiment trained models using Tuesday traffic and evaluated them on Wednesday traffic.
-
-The Tuesday-trained Random Forest did not detect the Wednesday attack families at its evaluated default threshold. The Tuesday-trained autoencoder achieved approximately:
-
-- Precision: 92.5%
-- Recall: 62.2%
-- F1-score: 74.4%
-- ROC-AUC: 0.89
-
-This experiment demonstrates the challenges of changing traffic distributions and previously unseen attack families within the same CIC-IDS2017 capture environment. It does not establish zero-day detection capability or generalization to independent networks.
+See `requirements.txt` for the installed Python dependencies.
 
 ## Project Structure
 
 ```text
-SentinelMind-AI/
-├── app.py
+Stai/
+├── app_redesigned_v2.py
+├── incident_management.py
+├── sentinelmind_improvements.py
 ├── requirements.txt
+├── README.md
+├── DEPLOYMENT.md
 ├── .gitignore
-├── .streamlit/
-│   └── config.toml
-├── backend/
 ├── data/
+│   ├── raw/
+│   │   ├── attack_path_sample.csv
+│   │   ├── attack_path_sample_2.csv
+│   │   └── original dataset files and license
 │   └── processed/
+│       ├── sentinelmind_dataset.csv
 │       ├── network_nodes.csv
-│       └── network_edges.csv
-├── docs/
-├── frontend/
-├── lib/
-├── models/
-│   └── feature_importance.csv
-├── notebooks/
+│       ├── network_edges.csv
+│       └── other processed datasets
 ├── reports/
 │   ├── sentinelmind_threat_report.csv
 │   ├── device_risk_assessment.csv
-│   └── network_topology.html
-└── *.py
-## Installation and Setup
+│   ├── network_topology.html
+│   ├── incident_management.db
+│   └── analysis and experiment outputs
+└── venv/
+```
 
-1. Clone the repository.
-2. Create a virtual environment: python -m venv venv
-3. Activate it: .\venv\Scripts\Activate.ps1
-4. Install dependencies: pip install -r requirements.txt
-5. Run: python -m streamlit run app.py --server.port 8503
+## Installation
 
-## Dashboard Data Requirements
+### 1. Clone or copy the project
 
-The dashboard requires:
-- eports/sentinelmind_threat_report.csv
-- eports/device_risk_assessment.csv
-- eports/network_topology.html
-- data/processed/network_nodes.csv
-- data/processed/network_edges.csv
+Keep the project directory structure intact.
 
-These pre-generated files are included in the repository. Full datasets and trained model binaries are excluded.
+### 2. Create a virtual environment
 
-## Limitations
+```bash
+python -m venv venv
+```
 
-- Offline dataset-analysis prototype, not live network monitoring.
-- Anomalies indicate unusual behaviour, not confirmed attacks.
-- Device risk scores are heuristic indicators, not compromise probabilities.
-- Network topology does not prove lateral movement.
-- No claim of guaranteed zero-day detection.
+### 3. Activate it
 
-## Future Improvements
+Windows PowerShell:
 
-- Live network traffic ingestion.
-- Analyst feedback and alert investigation.
-- Evaluation on independent datasets.
-- Improved false-positive analysis.
-- Model explainability enhancements.
+```powershell
+.\venv\Scripts\Activate.ps1
+```
 
----
-**SentinelMind AI** | AI-Assisted Network Threat Detection and Security Analytics
+### 4. Install dependencies
+
+```bash
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+### 5. Run the application
+
+```bash
+python -m streamlit run app_redesigned_v2.py
+```
+
+Open the local URL displayed in the terminal.
+
+## Data Requirements
+
+The application uses prepared CSV datasets under `data/processed/`, raw samples under `data/raw/`, and generated reports under `reports/`.
+
+Keep the expected filenames and directory structure unchanged. The System Diagnostics page can help identify missing or unreadable files.
+
+The original dataset license and attribution information should be retained when redistributing dataset files.
+
+## Important Limitations
+
+- This is a prepared-dataset analysis platform, not a live network monitoring system.
+- Model predictions and risk indicators are investigation aids, not proof of malicious activity.
+- Network graph datasets may be separate from the datasets used for model evaluation.
+- Results depend on the quality, coverage, and representativeness of the supplied data.
+- Mitigation comparisons depend on comparable before-and-after traffic captures.
+- IP investigation results depend on the available endpoint data.
+
+## Persistent Incident Records
+
+Incident records are stored in a local SQLite database under `reports/incident_management.db`.
+
+Back up this database regularly if investigation history must be retained.
+
+## Project Status
+
+SentinelMind AI is a cybersecurity research prototype intended for educational, analytical, and demonstration purposes.

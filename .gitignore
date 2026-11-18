@@ -1,23 +1,20 @@
-@'
-# Python
+﻿# Python
 __pycache__/
 *.py[cod]
 *.pyo
-*.pyd
+
+# Virtual environments
 venv/
 .venv/
 env/
 
-# Secrets
+# Environment variables and secrets
 .env
 .env.*
 !.env.example
 .streamlit/secrets.toml
 
-# Jupyter
-.ipynb_checkpoints/
-
-# IDE and OS
+# Editor and operating system files
 .vscode/
 .idea/
 .DS_Store
@@ -27,25 +24,43 @@ Thumbs.db
 *.log
 *.tmp
 
-# Model binaries
-models/*.pkl
-models/*.joblib
+# Local SQLite databases and backups
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
 
-# Large datasets
-data/raw/
-data/processed/*.csv
-!data/processed/network_nodes.csv
-!data/processed/network_edges.csv
-datasets/
+# Python test/cache artifacts
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
-# Large experimental exports
-reports/cross_day/fair_hybrid_comparison.csv
-reports/cross_day/wednesday_predictions.csv
-reports/cross_day/wednesday_autoencoder_predictions.csv
-reports/hybrid_detection_results.csv
-reports/autoencoder_predictions*.csv
+# Local backup copies
+*.backup_*
 
-# Backup scripts
-app_full_backup.py
-hybrid_detection_backup.py
-'@ | Set-Content .gitignore
+# SentinelMind local backups and temporary scripts
+*.bak
+*_backup.py
+*_backup_*.py
+*_before_*.py
+inspect_*.py
+fix_*.py
+patch_*.py
+integrate_*.py
+move_*.py
+
+# Large local research datasets (keep the deployment sample)
+data/raw/*.csv
+!data/raw/attack_path_sample.csv
+
+data/processed/Tuesday-WorkingHours.pcap_ISCX.csv
+data/processed/Wednesday-workingHours.pcap_ISCX.csv
+data/processed/conflicting_records.csv
+data/processed/model_dataset.csv
+data/processed/sentinelmind_dataset.csv
+data/processed/test_dataset.csv
+data/processed/train_dataset.csv
+
+# Local experimental models and outputs
+models/experiments/
+reports/experiments/

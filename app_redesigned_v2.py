@@ -12,8 +12,7 @@ import sentinelmind_improvements as improvements
 # --------------------------------------------------
 
 st.set_page_config(
-    page_title="SentinelMind AI",
-    page_icon="ðŸ›¡ï¸",
+    page_title="ThreatTrack AI",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -273,7 +272,7 @@ with st.sidebar:
           <div style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;
                       letter-spacing:0.16em;color:#6dd3d0;">SECURITY RESEARCH / 01</div>
           <div style="font-size:1.55rem;font-weight:700;color:#ffffff;
-                      letter-spacing:-0.04em;margin-top:0.45rem;">â—ˆ SentinelMind</div>
+                      letter-spacing:-0.04em;margin-top:0.45rem;">ThreatTrack AI</div>
           <div style="font-size:0.75rem;color:#a9bdcf;letter-spacing:0.08em;
                       margin-top:0.2rem;">NETWORK INTELLIGENCE</div>
         </div>
@@ -316,13 +315,13 @@ with st.sidebar:
         </div>
         <div style="background:#123b35;border:1px solid #216457;border-radius:8px;
                     padding:0.8rem 0.85rem;color:#bce9d9;font-size:0.86rem;">
-          <span style="color:#52d3a5;">â—</span>&nbsp; Offline analysis ready
+          <span style="color:#52d3a5;">READY</span>&nbsp; Offline analysis ready
           <div style="font-size:0.72rem;color:#a9cfc4;margin-top:0.35rem;">
             Prepared dataset analysis
           </div>
         </div>
         <div style="font-size:0.7rem;color:#8fa8bc;margin-top:0.8rem;">
-          SENTINELMIND / RESEARCH PROTOTYPE
+          THREATTRACK AI / RESEARCH PROTOTYPE
         </div>
         """,
         unsafe_allow_html=True
@@ -1740,7 +1739,7 @@ elif page == "Methodology":
         unsafe_allow_html=True
     )
 
-    st.title("How SentinelMind Works")
+    st.title("How ThreatTrack AI Works")
 
     st.caption(
         "Learn how the platform analyses network records, identifies unusual "
@@ -1882,6 +1881,8 @@ elif page == "Incident Management":
 st.divider()
 
 st.caption(
-    "SENTINELMIND AI | Network Intelligence Research Platform | "
+    "THREATTRACK AI | Network Threat Detection & Investigation | "
     "Offline Dataset Analysis"
 )
+
+
